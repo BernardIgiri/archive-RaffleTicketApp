@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">HB Raffle</string>
+
+    <string name="ticketPrices">Ticket Prices</string>
+    <string name="supportButton">Support</string>
+    <string name="upcomingRaffles">Upcoming Raffles</string>
+    <string name="buyTickets">Buy Tickets</string>
+    <string name="prizes">Prizes</string>
+    <string name="name">Name</string>
+    <string name="drawingTime">Drawing</string>
+
+    <string name="title_activity_upcoming_raffles">Upcoming Raffles</string>
+    <string name="prizePhoto">Prize Photo</string>
+    <string name="singularTicket">ticket</string>
+    <string name="pluralTickets">tickets</string>
+
+    <string name="unknownError">Unknown Error</string>
+    <string name="quantitySymbol">x</string>
+
+    <string name="action_current_raffle">Current Raffle</string>
+    <string name="moneyFormat">$0.00</string>
+    <string name="currency">USD</string>
+    <string name="purchaseConfirmation">You have been entered into the raffle.
+        A confirmation text will be sent to you shortly.
+        Winners will be notified via text message and their photographs
+        will be displayed briefly.
+    </string>
+    <string name="ok">OK</string>
+    <string name="paymentCancelled">Payment cancelled by user.</string>
+    <string name="paymentDeclined">Payment declined by PayPal.</string>
+    <string name="title_activity_buy_tickets">BuyTickets</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="phoneNumber">Phone Number</string>
+    <string name="yourPhoto">Click To Take Your Photo</string>
+    <string name="cancel">Cancel</string>
+    <string name="privacyNotice">See hbraffle.com/legal.html for privacy notice and terms of service.</string>
+</resources>

@@ -1,0 +1,36 @@
+Must use Google API to verify payment.
+
+Web Service API
+
+Features
+
+1) Get up coming raffles
+2) Enter raffles
+
+Generic JSON result format
+
+{
+	"status": "success" OR "error",
+	If error
+	"error": "Error text"
+	If sucess
+	"body": {}
+}
+
+
+REST calls
+
+GET {baseUrl}/raffles
+
+"body": [{
+	"title": "Example Raffle",
+	"description": "Example Raffle",
+	"date": "YYYY-MM-DD"
+}]
+
+
+POST {baseUrl}/entry/{raffleId}/{name}/{os}
+- uploaded: image data -
+
+"body": "ConfirmationID"
+

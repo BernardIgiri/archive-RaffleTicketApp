@@ -1,0 +1,144 @@
+upcoming_raffles: >
+ SELECT
+   `id`,
+   `title`,
+   `description`,
+   DATE_FORMAT(`date`, '%m-%d-%Y') `date`,
+   DATE_FORMAT(`drawingTime`, '%m-%d-%Y %h:%i%p') `drawingTime`
+ FROM
+   `raffle`
+ WHERE 
+   `date` BETWEEN :start AND :end
+   AND `isPublic`=1
+   ORDER BY `date` ASC
+   LIMIT 10;
+  
+select_raffle: >
+ SELECT
+   r.`id`,
+   r.`title`,
+   r.`description`,
+   DATE_FORMAT(r.`date`, '%m-%d-%Y') `date`,
+   DATE_FORMAT(r.`drawingTime`, '%m-%d-%Y %h:%i%p') `drawingTime`,
+   t.`quantity` `ticketQuantity`,
+   t.`price` `ticketPrice`,
+   p.`placement` `prizePlacement`,
+   p.`quantity` `prizeQuantity`,
+   p.`name` `prizeName`,
+   p.`description` `prizeDescription`
+ FROM
+   `raffle` r,
+   `raffleTicketPrice` t,
+   `rafflePrize` p
+ WHERE 
+   r.`id` = :id
+   AND p.`raffleId` = r.`id`
+   AND t.`raffleId` = r.`id`
+   ORDER BY t.`quantity` ASC, p.`placement` ASC;
+  
+select_current_raffle: >
+ SELECT
+   r.`id`,
+   r.`title`,
+   r.`description`,
+   DATE_FORMAT(r.`date`, '%m-%d-%Y') `date`,
+   DATE_FORMAT(r.`drawingTime`, '%m-%d-%Y %h:%i%p') `drawingTime`,
+   t.`quantity` `ticketQuantity`,
+   t.`price` `ticketPrice`,
+   p.`placement` `prizePlacement`,
+   p.`quantity` `prizeQuantity`,
+   p.`name` `prizeName`,
+   p.`description` `prizeDescription`
+ FROM
+   `raffle` r,
+   `raffleTicketPrice` t,
+   `rafflePrize` p
+ WHERE 
+   r.`id` =
+        (SELECT `id`
+        FROM `raffle`
+        WHERE
+        DATE(`date`) >= CURDATE()
+        AND `isPublic` = 1
+        ORDER BY `date` LIMIT 1)
+   AND p.`raffleId` = r.`id`
+   AND t.`raffleId` = r.`id`
+   ORDER BY t.`quantity` ASC, p.`placement` ASC;
+
+validate_raffle: >
+ SELECT
+   1 `isValid`
+ FROM
+   `raffle`
+ WHERE 
+   DATE(`date`) >= CURDATE()
+   AND `isPublic`=1
+   AND `id`=:id
+   LIMIT 1;
+
+insert_raffle_entry: >
+ INSERT INTO `entry`
+ SET 
+   `raffleId` = :raffleId,
+   `name` = :name,
+   `phoneNumber` = :phoneNumber,
+   `os` = :os,
+   `numberOfTickets` = :numberOfTickets,
+   `invoiceNumber` = :invoiceNumber;
+
+delete_raffle_entry: >
+ DELETE FROM `entry`
+ WHERE
+   `id` = :id;
+
+select_winners: >
+ SELECT
+   e.`name`,
+   e.`id` `ticketNumber`,
+   w.`order`
+ FROM
+   `raffleWinner` w,
+   `entry` e
+ WHERE
+   w.`entryId` = e.`id`
+   AND w.`raffleId` = :raffleId
+   AND e.`isPaymentConfirmed` = 1
+ ORDER BY
+   w.`order` ASC;
+
+select_canidates: >
+ SELECT
+   `id`,
+   `numberOfTickets`
+ FROM `entry`
+ WHERE
+   `isPaymentConfirmed` = 1
+   AND `numberOfTickets` > 0
+   AND `raffleId` = :raffleId;
+   
+select_number_of_ticketss: >
+ SELECT
+   SUM(`numberOfTickets`) `totalNumberOfTickets`
+ FROM `entry`
+ WHERE
+   `isPaymentConfirmed` = 1
+   AND `numberOfTickets` > 0
+   AND `raffleId` = :raffleId;
+   
+select_valid_payment: >
+ SELECT e.`id`
+ FROM `entry` e, `raffleTicketPrice` p
+ WHERE
+   e.`raffleId` = p.`raffleId`
+   AND e.`numberOfTickets` = p.`quantity`
+   AND e.`invoiceNumber` = :invoiceNumber
+   AND t.`price` <= :paymentAmount
+ LIMIT 1;
+   
+confirm_payment: >
+ UPDATE `entry`
+ SET
+   `isPaymentConfirmed` = 1
+ WHERE
+   `id` = :id;
+   

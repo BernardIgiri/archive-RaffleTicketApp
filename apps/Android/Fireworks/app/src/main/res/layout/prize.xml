@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <ImageView
+        android:contentDescription="@string/prizePhoto"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/prizePhoto" />
+
+    <LinearLayout
+        android:paddingEnd="5dp"
+        android:paddingStart="5dp"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/prizeName"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/prizeDescription"
+            />
+    </LinearLayout>
+    <TextView
+        android:layout_gravity="top|end"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="5dp"
+        android:text="@string/quantitySymbol"
+        tools:ignore="RtlCompat,RtlSymmetry" />
+    <TextView
+        android:layout_gravity="top|end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/prizeQuantity"
+        />
+</LinearLayout>

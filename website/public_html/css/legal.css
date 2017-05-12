@@ -1,0 +1,26 @@
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+div {
+	margin-top: 2%;
+	min-height: 100%;
+}
+html, body {
+	height: 95%;
+}
+
+body {
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2%;
+}
+
+.footer {
+	margin-bottom: 15%;
+}
